@@ -1,7 +1,7 @@
 import { CheckoutPageLocators } from '../locators/CheckoutPageLocators';
 
 class CheckoutPage {
-  constructor() {
+  constructor(data) {
     this.locators = CheckoutPageLocators;
     this.pageTitle = this.locators.pageTitle;
     this.firstNameInput = this.locators.firstNameInput;
@@ -11,11 +11,12 @@ class CheckoutPage {
     this.cancelButton = this.locators.cancelButton;
     this.errorMessage = this.locators.errorMessage;
     this.errorButton = this.locators.errorButton;
+    this.testData = data;
   }
 
   // Verify page title - Checkout: Your Information
   verifyPageTitle() {
-    cy.get(this.pageTitle).should('contain', 'Checkout: Your Information');
+    cy.get(this.pageTitle).should('contain', this.testData.checkoutInformationHeader);
     return this;
   }
 
@@ -99,19 +100,19 @@ class CheckoutPage {
 
   // Verify first name field has error (required field)
   verifyFirstNameFieldError() {
-    this.verifyErrorText('First Name is required');
+    this.verifyErrorText(this.testData.firstNameRequiredError);
     return this;
   }
 
     // Verify last name field has error (required field)
   verifyLastNameFieldError() {
-    this.verifyErrorText('Last Name is required');
+    this.verifyErrorText(this.testData.lastNameRequiredError);
     return this;
   }
 
     // Verify postal code field has error (required field)
   verifyPostalCodeFieldError() {
-    this.verifyErrorText('Postal Code is required');
+    this.verifyErrorText(this.testData.postalCodeRequiredError);
     return this;
   }
 

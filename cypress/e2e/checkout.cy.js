@@ -12,17 +12,21 @@ describe('Checkout Tests', () => {
   let checkoutPage;
   let checkoutOverviewPage;
   let checkoutCompletePage;
+  let testData;
 
   beforeEach(() => {
-    loginPage = new LoginPage();
-    productsPage = new ProductsPage();
-    cartPage = new CartPage();
-    checkoutPage = new CheckoutPage();
-    checkoutOverviewPage = new CheckoutOverviewPage();
-    checkoutCompletePage = new CheckoutCompletePage();
+    cy.fixture('data.json').then((data) => {
+      testData = data;
+      loginPage = new LoginPage();
+      productsPage = new ProductsPage(data);
+      cartPage = new CartPage(data);
+      checkoutPage = new CheckoutPage(data);
+      checkoutOverviewPage = new CheckoutOverviewPage(data);
+      checkoutCompletePage = new CheckoutCompletePage(data);
 
-    // Login before each test
-    cy.login('standard_user', 'secret_sauce');
+      // Login before each test
+      cy.login(testData.login.username, testData.login.password);
+    });
   });
 
   it('Scenario 1: Complete checkout with valid data should show THANK YOU message', () => {
@@ -35,7 +39,7 @@ describe('Checkout Tests', () => {
 
     cartPage.proceedToCheckout();
     checkoutPage.verifyPageTitle();
-    checkoutPage.fillCheckoutInfo('Ahmed', 'Mostafa', '12777');
+    checkoutPage.fillCheckoutInfo(testData.firstName, testData.lastName, testData.postalCode);
     checkoutPage.clickContinue();
 
     checkoutOverviewPage.verifyPageTitle();
@@ -44,7 +48,7 @@ describe('Checkout Tests', () => {
 
     checkoutCompletePage.verifyCheckoutSuccess();
     checkoutCompletePage.verifyThankYouMessage();
-    checkoutCompletePage.verifyCompleteText('Your order has been dispatched, and will arrive just as fast as the pony can get there!');
+    checkoutCompletePage.verifyCompleteText(testData.orderConfirmationMessage);
   });
 
   it('Scenario 2 (Optional): Try checkout without first name - should show validation error', () => {
@@ -55,11 +59,11 @@ describe('Checkout Tests', () => {
     
     cartPage.proceedToCheckout();
     checkoutPage.verifyPageTitle();
-    checkoutPage.typeLastName('Mostafa');
-    checkoutPage.typePostalCode('12777');
+    checkoutPage.typeLastName(testData.lastName);
+    checkoutPage.typePostalCode(testData.postalCode);
     checkoutPage.clickContinue();
 
     checkoutPage.verifyErrorMessage();
-    checkoutPage.verifyErrorText('First Name is required');
+    checkoutPage.verifyErrorText(testData.expectedErrorMessageFirstName);
   });
 });

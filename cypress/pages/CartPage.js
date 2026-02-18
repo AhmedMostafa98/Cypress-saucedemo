@@ -1,7 +1,7 @@
 import { CartPageLocators } from '../locators/CartPageLocators';
 
 class CartPage {
-  constructor() {
+  constructor(data) {
     this.locators = CartPageLocators;
     this.pageTitle = this.locators.pageTitle;
     this.cartItem = this.locators.cartItem;
@@ -13,11 +13,12 @@ class CartPage {
     this.continueShoppingButton = this.locators.continueShoppingButton;
     this.checkoutButton = this.locators.checkoutButton;
     this.cartBadge = this.locators.cartBadge;
+    this.testData = data;
   }
-
+  
   // Verify page title
   verifyPageTitle() {
-    cy.get(this.pageTitle).should('contain', 'Cart');
+    cy.get(this.pageTitle).should('contain', this.testData.cartHeader);
     return this;
   }
 

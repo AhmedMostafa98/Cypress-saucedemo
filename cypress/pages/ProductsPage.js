@@ -1,7 +1,7 @@
 import { ProductsPageLocators } from '../locators/ProductsPageLocators';
 
 class ProductsPage {
-  constructor() {
+  constructor(data) {
     this.locators = ProductsPageLocators;
     this.pageTitle = this.locators.pageTitle;
     this.inventory = this.locators.inventory;
@@ -19,11 +19,12 @@ class ProductsPage {
     this.allItems = this.locators.allItems;
     this.About = this.locators.About;
     this.ResetAppState = this.locators.ResetAppState;
+    this.testData = data;
   }
 
   // Verify page title
   verifyPageTitle() {
-    cy.get(this.pageTitle).should('contain', 'Products');
+    cy.get(this.pageTitle).should('contain', this.testData.productsHeader);
     return this;
   }
 

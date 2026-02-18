@@ -1,0 +1,22 @@
+{
+    "login": {
+        "username": "standard_user",
+        "password": "secret_sauce",
+        "invalidUsername": "invalid_user",
+        "lockedOutUsername": "locked_out_user",
+        "loginlockedMessage": "Sorry, this user has been locked out"
+    },
+    "firstName": "Ahmed",
+    "lastName": "Mostafa",
+    "postalCode": "12777",
+    "expectedErrorMessageFirstName": "Error: First Name is required",
+    "expectedErrorMessageLastName": "Error: Last Name is required",
+    "expectedErrorMessagePostalCode": "Error: Postal Code is required",
+    "productsHeader": "Products",
+    "cartHeader": "Your Cart",
+    "checkoutInformationHeader": "Checkout: Your Information",
+    "checkoutOverviewHeader": "Checkout: Overview",
+    "checkoutCompleteHeader": "Checkout: Complete!",
+    "thankYouMessage": "Thank you for your order!",
+    "orderConfirmationMessage": "Your order has been dispatched, and will arrive just as fast as the pony can get there!"
+}

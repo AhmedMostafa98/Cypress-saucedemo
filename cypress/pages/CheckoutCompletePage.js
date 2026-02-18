@@ -1,23 +1,24 @@
 import { CheckoutCompletePageLocators } from '../locators/CheckoutCompletePageLocators';
 
 class CheckoutCompletePage {
-  constructor() {
+  constructor(data) {
     this.locators = CheckoutCompletePageLocators;
     this.pageTitle = this.locators.pageTitle;
     this.completeHeader = this.locators.completeHeader;
     this.completeText = this.locators.completeText;
     this.backHomeButton = this.locators.backHomeButton;
+    this.testData = data;
   }
 
   // Verify page title - Checkout: Complete
   verifyPageTitle() {
-    cy.get(this.pageTitle).should('contain', 'Checkout: Complete');
+    cy.get(this.pageTitle).should('contain', this.testData.checkoutCompleteHeader);
     return this;
   }
 
   // Verify "Thank you" message
   verifyThankYouMessage() {
-    cy.get(this.completeHeader).should('contain', 'Thank you');
+    cy.get(this.completeHeader).should('contain', this.testData.thankYouMessage);
     return this;
   }
 
@@ -28,7 +29,7 @@ class CheckoutCompletePage {
 
   // Verify order confirmation message
   verifyOrderConfirmation() {
-    cy.get(this.completeHeader).should('contain', 'Thank you for your order');
+    cy.get(this.completeHeader).should('contain', this.testData.thankYouForOrderMessage);
     return this;
   }
 

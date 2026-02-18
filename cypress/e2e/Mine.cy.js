@@ -7,23 +7,26 @@ import CheckoutCompletePage from '../pages/CheckoutCompletePage';
 
 describe('My Testcases - Demonstrating Testing Capabilities', () => {
   let loginPage;
-
   let productsPage;
   let cartPage;
   let checkoutPage;
   let checkoutOverviewPage;
   let checkoutCompletePage;
+  let testData;
 
   beforeEach(() => {
-    loginPage = new LoginPage();
-    productsPage = new ProductsPage();
-    cartPage = new CartPage();
-    checkoutPage = new CheckoutPage();
-    checkoutOverviewPage = new CheckoutOverviewPage();
-    checkoutCompletePage = new CheckoutCompletePage();
+    cy.fixture('data.json').then((data) => {
+      testData = data;
+      loginPage = new LoginPage();
+      productsPage = new ProductsPage(testData);
+      cartPage = new CartPage(testData);
+      checkoutPage = new CheckoutPage(testData);
+      checkoutOverviewPage = new CheckoutOverviewPage(testData);
+      checkoutCompletePage = new CheckoutCompletePage(testData);
 
-    // Login before each test
-    cy.login('standard_user', 'secret_sauce');
+      // Login before each test
+      cy.login(testData.login.username, testData.login.password);
+    });
   });
 
   it('Should add all available products to cart and complete checkout', () => {
@@ -31,7 +34,7 @@ describe('My Testcases - Demonstrating Testing Capabilities', () => {
     productsPage.goToCart();
     cartPage.verifyCartItemsCount(6);
     cartPage.proceedToCheckout();
-    checkoutPage.proceedToNextStep('Ahmed', 'Mostafa', '12777');
+    checkoutPage.proceedToNextStep(testData.firstName, testData.lastName, testData.postalCode);
     checkoutOverviewPage.verifyCartItemsCount(6);
     checkoutOverviewPage.clickFinish();
     checkoutCompletePage.verifyCheckoutSuccess();
@@ -70,7 +73,7 @@ describe('My Testcases - Demonstrating Testing Capabilities', () => {
     });
     productsPage.goToCart();
     cartPage.proceedToCheckout();
-    checkoutPage.proceedToNextStep('Ahmed', 'Mostafa', '12777');
+    checkoutPage.proceedToNextStep(testData.firstName, testData.lastName, testData.postalCode);
     checkoutOverviewPage.verifyItemInOverview('Sauce Labs Fleece Jacket');
     checkoutOverviewPage.verifyItemInOverview('Sauce Labs Bolt T-Shirt');
     checkoutOverviewPage.getSubtotal().then((subtotalText) => {
@@ -84,7 +87,7 @@ describe('My Testcases - Demonstrating Testing Capabilities', () => {
     cy.getCartBadgeCount().should('eq', '1');
     cy.goToCart();
     cy.proceedToCheckout();
-    cy.fillCheckoutInfo('Ahmed', 'Mostafa', '12777');
+    cy.fillCheckoutInfo(testData.firstName, testData.lastName, testData.postalCode);
     cy.completeCheckout();
   });
 });

@@ -1,7 +1,7 @@
 import { CheckoutOverviewPageLocators } from '../locators/CheckoutOverviewPageLocators';
 
 class CheckoutOverviewPage {
-  constructor() {
+  constructor(data) {
     this.locators = CheckoutOverviewPageLocators;
     this.pageTitle = this.locators.pageTitle;
     this.cartItem = this.locators.cartItem;
@@ -15,11 +15,12 @@ class CheckoutOverviewPage {
     this.finishButton = this.locators.finishButton;
     this.cancelButton = this.locators.cancelButton;
     this.cartBadge = this.locators.cartBadge;
+    this.testData = data;
   }
 
   // Verify page title - Checkout: Overview
   verifyPageTitle() {
-    cy.get(this.pageTitle).should('contain', 'Checkout: Overview');
+    cy.get(this.pageTitle).should('contain', this.testData.checkoutOverviewHeader);
     return this;
   }
 

@@ -6,15 +6,18 @@ describe('Cart Tests', () => {
   let loginPage;
   let productsPage;
   let cartPage;
+  let testData;
 
   beforeEach(() => {
-    loginPage = new LoginPage();
-    productsPage = new ProductsPage();
-    cartPage = new CartPage();
-
-    // Login before each test
-    cy.login('standard_user', 'secret_sauce');
-
+    cy.fixture('data.json').then((data) => {
+      testData = data;
+      loginPage = new LoginPage();
+      productsPage = new ProductsPage(testData);
+      cartPage = new CartPage(testData);
+      
+      // Login before each test
+      cy.login(testData.login.username, testData.login.password);
+    });
   });
 
   it('Scenario 1: Add two items to cart and verify they appear with badge = 2', () => {
