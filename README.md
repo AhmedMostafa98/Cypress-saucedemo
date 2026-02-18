@@ -10,7 +10,7 @@ Project structure
 CypressSauceDemo/
 ├── cypress/
 │   ├── e2e/            # test specs (login, cart, checkout, advanced)
-|   ├── fixtures/        # test data
+|   ├── fixtures/       # test data
 │   ├── pages/          # page objects
 │   ├── locators/       # centralized selectors (new)
 │   ├── support/        # commands and setup
