@@ -29,7 +29,7 @@ class CheckoutCompletePage {
 
   // Verify order confirmation message
   verifyOrderConfirmation() {
-    cy.get(this.completeHeader).should('contain', this.testData.thankYouForOrderMessage);
+    cy.get(this.completeText).should('contain', this.testData.orderConfirmationMessage);
     return this;
   }
 
