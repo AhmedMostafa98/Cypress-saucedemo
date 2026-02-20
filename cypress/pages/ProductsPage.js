@@ -97,12 +97,6 @@ class ProductsPage {
     return this;
   }
 
-  // Verify item is in cart page by name
-  verifyItemInCart(productName) {
-    cy.contains(this.inventoryItemName, productName).should('be.visible');
-    return this;
-  }
-
   // Verify item is not shown in products (removed from cart visually indicator)
   verifyItemAddedToCart(productName) {
     cy.contains(this.inventoryItemName, productName)
